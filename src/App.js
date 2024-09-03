@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function submit(event) {
+    event.preventDefault();
+
+    fetch("какой-то сервер", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={submit}>
+      <input
+        placeholder="Почта"
+        value={email}
+        type="email"
+        required
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        placeholder="Пароль"
+        value={password}
+        type="password"
+        required
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button type="submit">Отправить</button>
+    </form>
   );
 }
 
